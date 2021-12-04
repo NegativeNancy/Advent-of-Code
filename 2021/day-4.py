@@ -89,8 +89,6 @@ def solution1(data):
     winnerFound, lastDraw, winBoard = False, 0, 0
     
     for drawNumber in drawNumbers:
-        if winnerFound:
-            break
         b_counter = 0
         for board in boards:
             board = mark_number(drawNumber, board)
@@ -101,6 +99,8 @@ def solution1(data):
                 break
             else:
                 b_counter += 1
+        if winnerFound:
+            break
         
     print('Winning Number:', lastDraw)
     print('First board winning score:', calc_score(lastDraw, boards[winBoard]) )
