@@ -28,46 +28,59 @@ def create_boards(data):
     return board_list
 
 
-def check_for_winner(boards, drawNumber):
-    lastDraw, winBoard, winnerFound = check_horizontal(boards, drawNumber)
-    if winnerFound:
-        return lastDraw, winBoard, winnerFound
+def check_for_winner(board):
+    if winner_horizontal(board):
+        return True
+    elif winner_vertical(board):
+        return True
     else:
-        return 0, 0, False
+        return False
 
 
-def check_horizontal(boards, drawNumber):
-    b_counter = 0
-    for board in boards:
-        for j in board:
-            x_counter = 0
-            for k in j:
-                if 'x' in k:
-                    x_counter += 1
-
-            if x_counter == 5:
-                lastDraw, winBoard = drawNumber, b_counter
-                print('Winning board found! Board number %d is the winning board!' % (b_counter + 1))
-                return lastDraw, winBoard, True
-        b_counter += 1
-    return 0, 0, False
+def winner_horizontal(board):
+    for j in board:
+        x_counter = 0
+        for k in j:
+            if 'x' in k:
+                x_counter += 1
+        if x_counter == 5:
+            return True
+    return False
 
 
-# def check_vertical(boards, drawNumber):
-#     b_counter = 0
-#     for board in boards:
-#         for j in board:
-#             x_counter = 0
-#             for k in j:
-#                 if 'x' in k:
-#                     x_counter += 1
+def winner_vertical(board):
+    counter = 0
+    while counter < len(board[0]):
+        x_counter = 0
+        for line in board:
+            if 'x' in (line[counter]):
+                x_counter += 1
+        if x_counter == 5:
+            return True
+        counter += 1
+    return False
 
-#             if x_counter == 5:
-#                 lastDraw, winBoard = drawNumber, b_counter
-#                 print('Winning board found! Board number %d is the winning board!' % (b_counter + 1))
-#                 return lastDraw, winBoard, True
-#         b_counter += 1
-#     return 0, 0, False
+
+def mark_number(drawNumber, board):
+    j_counter = 0
+    for j in board:
+        k_counter = 0
+        for k in j: 
+            if drawNumber == k:
+                board[j_counter][k_counter] += 'x'
+            k_counter += 1
+        j_counter += 1
+    return board
+
+
+def calc_score(lastDraw, board):
+    unmarkedSum = 0
+    for line in board:
+        print(line)
+        for number in line:
+            if 'x' not in number:
+                unmarkedSum += int(number)
+    return (unmarkedSum * int(lastDraw))
 
 
 def solution1(data):
@@ -76,33 +89,21 @@ def solution1(data):
     winnerFound, lastDraw, winBoard = False, 0, 0
     
     for drawNumber in drawNumbers:
-        b_counter = 0
-        for board in boards:
-            j_counter = 0
-            for j in board:
-                k_counter = 0
-                for k in j: 
-                    if drawNumber == k:
-                        board[j_counter][k_counter] += 'x'
-                    k_counter += 1
-                j_counter += 1
-            b_counter += 1
-        
-        lastDraw, winBoard, winnerFound = check_for_winner(boards, drawNumber)
-
         if winnerFound:
             break
+        b_counter = 0
+        for board in boards:
+            board = mark_number(drawNumber, board)
+
+            winnerFound = check_for_winner(board)
+            if winnerFound:
+                lastDraw, winBoard = drawNumber, b_counter
+                break
+            else:
+                b_counter += 1
         
-    unmarkedSum = 0
     print('Winning Number:', lastDraw)
-    for line in boards[winBoard]:
-        print(line)
-        for number in line:
-            if 'x' not in number:
-                unmarkedSum += int(number)
-                print('Unmarked number:', number)
-    
-    print('Final board score:', (unmarkedSum * int(lastDraw)))
+    print('First board winning score:', calc_score(lastDraw, boards[winBoard]) )
 
 
 def solution2(data):
@@ -113,4 +114,4 @@ if __name__ == '__main__':
     # data = get_input("test-data.txt")
     data = get_input("input-d4.txt")
     solution1(data)
-    solution2(data)
+    # solution2(data)
