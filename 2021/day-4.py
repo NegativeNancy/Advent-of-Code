@@ -1,9 +1,4 @@
-def get_input(filename):
-    inputFile = "2021/input/" + filename
-    with open(inputFile) as fhand:
-        data = [line.strip() for line in fhand]
-    return data
-    
+from util import get_input
 
 def create_boards(data):
     data_c, data_l = 0, len(data)
@@ -129,8 +124,12 @@ def solution2(data):
     print('Last winning board score:', calc_score(lastDraw, boards[winBoard]) )
 
 
-if __name__ == '__main__':
+def main():
     # data = get_input("test-data.txt")
     data = get_input("input-d4.txt")
     solution1(data)
     solution2(data)
+
+
+if __name__ == '__main__':
+    main()

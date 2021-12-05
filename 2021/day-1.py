@@ -1,8 +1,4 @@
-def get_input(filename):
-    inputFile = "input/" + filename
-    with open(inputFile) as fhand:
-        data = [int(line.strip()) for line in fhand]
-    return data
+from util import get_int_input
 
 
 def count_larger(data):
@@ -36,7 +32,7 @@ def solution2(data):
     print(total, "sums are larger than the previous")
 
 if __name__ == '__main__':
-    # data = get_input("test-data.txt")
-    data = get_input("input-d1.txt")
+    # data = get_int_input("test-data.txt")
+    data = get_int_input("input-d1.txt")
     solution1(data)
     solution2(data)

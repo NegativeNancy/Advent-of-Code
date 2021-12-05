@@ -1,9 +1,4 @@
-def get_input(filename):
-    inputFile = "input/" + filename
-    with open(inputFile) as fhand:
-        data = [line.strip() for line in fhand]
-    return data
-
+from util import get_input
 
 def get_postion(data):
     movement, steps = data.split()

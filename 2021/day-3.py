@@ -1,9 +1,4 @@
-def get_input(filename):
-    inputFile = "2021/input/" + filename
-    with open(inputFile) as fhand:
-        data = [line.strip() for line in fhand]
-    return data
-
+from util import get_input
 
 def get_fequent_bit(data, binary_c, len_d):
     mostFrequent, leastFrequent, data_c, numList = '', '', 0, []
@@ -49,8 +44,7 @@ def solution2(data):
         binary_c += 1
         len_d = len(data_1)
     oxygen = data_1[0]
-
-
+    
     binary_c = 0
     while binary_c < len_b:
         mfb, lfb = get_fequent_bit(data_0, binary_c, len_d)
@@ -62,15 +56,18 @@ def solution2(data):
         binary_c += 1
         len_d = len(data_0)
     co2 = data_0[0]
-
     
     print("Oxygen:", oxygen, " CO2:", co2)
     print("Oxygen:", int(oxygen, 2), " CO2:", int(co2, 2))
     print("Lifesupport rating:", (int(oxygen, 2) * int(co2, 2)))
-    
+   
 
-if __name__ == '__main__':
+def main():
     # data = get_input("test-data.txt")
     data = get_input("input-d3.txt")
     solution1(data)
     solution2(data)
+
+
+if __name__ == '__main__':
+    main()
