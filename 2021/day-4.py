@@ -29,12 +29,9 @@ def create_boards(data):
 
 
 def check_for_winner(board):
-    if winner_horizontal(board):
-        return True
-    elif winner_vertical(board):
-        return True
-    else:
-        return False
+    if winner_horizontal(board): return True
+    elif winner_vertical(board): return True
+    else: return False
 
 
 def winner_horizontal(board):
@@ -102,16 +99,38 @@ def solution1(data):
         if winnerFound:
             break
         
-    print('Winning Number:', lastDraw)
-    print('First board winning score:', calc_score(lastDraw, boards[winBoard]) )
+    print('First winning Number:', lastDraw)
+    print('First winning board score:', calc_score(lastDraw, boards[winBoard]) )
 
 
 def solution2(data):
-    pass
+    drawNumbers = data[0].split(',')
+    boards = create_boards(data)
+    winnerFound, lastDraw, winBoard = False, 0, 0
+    winningBoards = set()
+    
+    for drawNumber in drawNumbers:
+        b_counter = 0
+        for board in boards:
+            board = mark_number(drawNumber, board)
+
+            winnerFound = check_for_winner(board)
+            if winnerFound:
+                lastDraw, winBoard = drawNumber, b_counter
+                winningBoards.add(winBoard)
+            if len(winningBoards) == len(boards):
+                break
+
+            b_counter += 1
+        if len(winningBoards) == len(boards):
+            break
+
+    print('Last winning Number:', lastDraw)
+    print('Last winning board score:', calc_score(lastDraw, boards[winBoard]) )
 
 
 if __name__ == '__main__':
     # data = get_input("test-data.txt")
     data = get_input("input-d4.txt")
     solution1(data)
-    # solution2(data)
+    solution2(data)
