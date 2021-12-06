@@ -3,48 +3,48 @@ from util import get_input
 
 def get_fishes(data):
     days = []
-    for n in data: 
+    for n in data:
         day = n.split(',')
     for d in day:
         days.append(int(d))
     return days
 
 
-def count_fish(days_old, daysToCount):
+def count_fish(daysOld, daysToCount):
     c = 0
 
     while c < daysToCount:
         # print("Calculating day:", c)
-        days_new = []
+        daysNew = []
         fishToAdd = 0
-        for day in days_old:
+        for day in daysOld:
             if (day > 0):
-                days_new.append((day) - 1)
+                daysNew.append((day) - 1)
             elif (day == 0):
-                days_new.append(6)
+                daysNew.append(6)
                 fishToAdd += 1
-        
+
         fish = 0
         while fish < fishToAdd:
-            days_new.append(8)
+            daysNew.append(8)
             fish += 1
 
-        days_old = days_new
+        daysOld = daysNew
         c += 1
-    return days_old
+    return daysOld
 
 
 def solution1(data):
     daysToCount = 80
     totalFish = count_fish(get_fishes(data), daysToCount)
     print("Total fish after %i:" % daysToCount, len(totalFish))
-    
+
 
 def solution2(data):
     daysToCount = 256
     fishes = get_fishes(data)
 
-    numberAmount = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0}
+    numberAmount = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
     for f in fishes:
         numberAmount[f] += 1
     for f in range(daysToCount):
@@ -59,7 +59,7 @@ def solution2(data):
         newNumberAmount[7] = numberAmount[8]
         newNumberAmount[8] = numberAmount[0]
         numberAmount = newNumberAmount
-    
+
     print("Total fish after %i:" % daysToCount, sum(newNumberAmount.values()))
 
 
