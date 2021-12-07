@@ -37,6 +37,8 @@ def solution2(data):
         if (totalFuelUsed == 0) or (fuelUsed < totalFuelUsed):
             totalFuelUsed = fuelUsed
             level = n
+        elif fuelUsed > totalFuelUsed and totalFuelUsed != 0:
+            break
     print('Total Fuel used:', totalFuelUsed, 'to reach level', level)
 
 
